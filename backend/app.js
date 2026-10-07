@@ -47,6 +47,9 @@ app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 // Global API rate limit
 app.use('/api', apiLimiter);
 
+app.get('/', (req, res) => {
+    res.send("API Working")});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
@@ -63,5 +66,6 @@ app.use('/api/dashboard', dashboardRoutes);
 // 404 & Centralized Error Handling
 app.use(notFound);
 app.use(errorHandler);
+
 
 module.exports = app;
