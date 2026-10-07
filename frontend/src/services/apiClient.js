@@ -1,14 +1,8 @@
-const BASE_URL = 'https://assignment-01-t2a0.onrender.com';
+const BASE_URL = 'https://assignment-01-t2a0.onrender.com/api';
 
-/**
- * Universal API client for standard JSON requests
- */
 export const apiClient = async (endpoint, options = {}) => {
-  const token = localStorage.getItem('token');
-
   const headers = {
     'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...options.headers,
   };
 
