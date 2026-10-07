@@ -7,12 +7,14 @@ const authService = require('../services/authService');
 // POST /api/auth/register
 const register = asyncHandler(async (req, res) => {
   const { user, token } = await authService.registerUser(req.body);
+    res.cookie("token", token)
   return sendSuccess(res, 201, 'Account created successfully', { user, token });
 });
 
 // POST /api/auth/login
 const login = asyncHandler(async (req, res) => {
   const { user, token } = await authService.loginUser(req.body);
+    res.cookie("token", token)
   return sendSuccess(res, 200, `Welcome back, ${user.name.split(' ')[0]}`, { user, token });
 });
 

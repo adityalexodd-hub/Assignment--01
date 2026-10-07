@@ -79,7 +79,7 @@ const loginUser = async ({ email, password }) => {
   return { user: user.toJSON(), token };
 };
 
-const getCurrentUser = async (userId) => {
+ const getCurrentUser = async (userId) => {
   const user = await User.findById(userId).select(PUBLIC_FIELDS).populate('manager', 'name email');
 
   if (!user) {

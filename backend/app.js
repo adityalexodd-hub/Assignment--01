@@ -49,6 +49,7 @@ app.use('/api', apiLimiter);
 
 app.get('/', (req, res) => {
     res.send("API Working")});
+    
 
 // Health check endpoint
 app.get('/health', (req, res) => {
