@@ -20,20 +20,44 @@ const app = express();
 app.use(helmet());
 
 // CORS configuration
+
+ 
+// CORS configuration
 const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, or server-to-server)
-      if (!origin || origin === clientUrl || /^http:\/\/localhost:\d+$/.test(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
+      // Requests without an Origin header
+      if (!origin) {
+        return callback(null, true);
       }
+
+      // Exact production frontend URL
+      if (origin === clientUrl) {
+        return callback(null, true);
+      }
+
+      // Vercel preview URLs for this project
+      if (
+        /^https:\/\/assignment-01-[a-z0-9-]+\.vercel\.app$/.test(origin)
+      ) {
+        return callback(null, true);
+      }
+
+      // Local development
+      if (/^http:\/\/localhost:\d+$/.test(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`Not allowed by CORS: ${origin}`));
     },
     credentials: true,
   })
 );
+
+ 
+
 
 // Logging
 if (process.env.NODE_ENV !== 'test') {
@@ -70,3 +94,5 @@ app.use(errorHandler);
 
 
 module.exports = app;
+
+//bdhfbjhadfjhbsaj
